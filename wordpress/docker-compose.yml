@@ -2,6 +2,7 @@ version: '3'
 services:
     wordpress:
         image: wordpress
+        restart: unless-stopped
         links:
          - mariadb:mysql
         environment:
@@ -13,6 +14,7 @@ services:
          - ./html:/var/www/html
     mariadb:
         image: mariadb
+        restart: unless-stopped
         environment:
          - MYSQL_ROOT_PASSWORD=secret
          - MYSQL_DATABASE=wordpress
