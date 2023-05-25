@@ -17,4 +17,8 @@ services:
          - MYSQL_ROOT_PASSWORD=secret
          - MYSQL_DATABASE=wordpress
         volumes:
-         - ./database:/var/lib/mysql
+         - wordpress_database:/var/lib/mysql
+volumes:
+    images:
+    wordpress_database:
+        external: true
