@@ -33,5 +33,5 @@ services:
       PARSOID_DOMAIN_localhost: http://mediawiki:80/api.php
 volumes:
   images:
-  wm_database:
+  mediawiki_database:
     external: true
