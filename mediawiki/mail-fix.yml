@@ -1,0 +1,10 @@
+  mailhog:
+    build:  https://raw.githubusercontent.com/up-lsl/public-files/main/mailhog/Dockerfile
+    image: mailhog/mailhog
+    environment:
+    - MH_STORAGE=maildir
+    - MH_MAILDIR_PATH=/maildir
+    volumes:
+    - ./maildir:/maildir
+    ports:
+    - "8025:8025"
