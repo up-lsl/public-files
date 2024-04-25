@@ -10,6 +10,18 @@
             // Get the value of the 'file' parameter from the URL
             const urlParams = new URLSearchParams(window.location.search);
             const fileParam = urlParams.get('file');
+            const filenameParam = urlParams.get('filename');
+
+            let filename;
+
+            // If 'filename' parameter is provided, use it; otherwise, use the filename from 'file' parameter
+            if (filenameParam) {
+                filename = filenameParam;
+            } else {
+                // Extract filename from the 'file' parameter
+                const fileUrlParts = fileParam.split('/');
+                filename = fileUrlParts[fileUrlParts.length - 1];
+            }
 
             // If 'file' parameter exists
             if (fileParam) {
@@ -19,12 +31,18 @@
                         // Create a temporary anchor element
                         const link = document.createElement('a');
                         link.href = window.URL.createObjectURL(blob);
-                        link.download = ''; // This will prompt the browser to download the file with its original name
+                        link.download = filename;
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
                     })
                     .catch(error => console.error('Error downloading file:', error));
+
+                // Display the filename in the browser
+                const downloadingMessage = document.getElementById('downloadingMessage');
+                if (downloadingMessage) {
+                    downloadingMessage.textContent = `Downloading File ${filename}...`;
+                }
             } else {
                 console.error("No file specified.");
             }
@@ -32,6 +50,6 @@
     </script>
 </head>
 <body onload="downloadFile()">
-    <h1>Downloading File...</h1>
+    <h1 id="downloadingMessage">Downloading File...</h1>
 </body>
 </html>
