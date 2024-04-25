@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Downloader</title>
+    <script>
+        // Function to download the file
+        function downloadFile() {
+            // Get the value of the 'file' parameter from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const fileParam = urlParams.get('file');
+
+            // If 'file' parameter exists
+            if (fileParam) {
+                fetch(fileParam)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        // Create a temporary anchor element
+                        const link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = ''; // This will prompt the browser to download the file with its original name
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    })
+                    .catch(error => console.error('Error downloading file:', error));
+            } else {
+                console.error("No file specified.");
+            }
+        }
+    </script>
+</head>
+<body onload="downloadFile()">
+    <h1>Downloading File...</h1>
+</body>
+</html>
